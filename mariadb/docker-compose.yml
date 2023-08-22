@@ -1,0 +1,36 @@
+version: latest
+
+volumes:
+  db_data:
+    driver: local
+
+services:
+  db:
+    container_name: my-mariadb
+    image: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./nation.sql:/docker-entrypoint-initdb.d/nation.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+  nitro-api:
+    container_name: my-nitro-api
+    build: .
+    restart: always
+    env_file: ./api/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - my-mariadb
+    networks:
+      - backend
+
