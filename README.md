@@ -1,3 +1,3 @@
-# React - Nitro - Prisma - MariaDB - Docker - Nginx
+# React - Nitro - Prisma - MariaDB - Docker
 
 ## Getting Started
